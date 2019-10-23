@@ -7,20 +7,20 @@ using namespace std;
 
 template <class T>
 class Keeper {
-	T *ptr;						//Указатель на элементы
-	int size;					//Размер контейнера
+	T *ptr;						
+	int size;					
 public:
 	Keeper();
 	~Keeper();
 
-	void push();				//Добавление элемента
-	void pop(int);				//Удаление элемента по индексу
+	void push();				
+	void pop(int);				
 
-	void writef(string);		//Запись в файл
-	void readf(string);		//Чтение из файла
+	void writef(string);		
+	void readf(string);		
 
-	void display();				//Вывод данных на экран
-	void edit(int);			//Изменение данных
+	void display();				
+	void edit(int);			
 };
 
 template<class T>
@@ -38,53 +38,53 @@ Keeper<T>::~Keeper() {
 
 template<class T>
 void Keeper<T>::push() {
-	T *tmp = new T[size + 1];			//Создаем новый массив на один элемент больше
-	for (int i = 0; i < size; ++i) {	//Копируем все элементы в новый массив
+	T *tmp = new T[size + 1];			
+	for (int i = 0; i < size; ++i) {	
 		tmp[i] = ptr[i];
 	}
 
-	delete[] ptr;						//Удаляем старый массив
-	ptr = tmp;							//ptr указывает на новый массив
-	cin >> ptr[size];					//Вводим данные добавленного элемента
-	++size;								//Увеличиваем размер контейнера
+	delete[] ptr;						
+	ptr = tmp;							
+	cin >> ptr[size];				
+	++size;								
 	cout << endl << endl << "New el add successfull" << endl << endl;
 }
 
 template<class T>
 void Keeper<T>::pop(int num) {
 	try {
-		if (size == 0) {						//Пуст ли контейнер
+		if (size == 0) {						
 			exception err("EMPTY");
 			throw err;
 		}
-		if (num < 0 || num >= size) {				//Корректен ли индекс
+		if (num < 0 || num >= size) {				
 			exception ex("Wrong number");
 			throw ex;
 		}
 
-		T *tmp = new T[size - 1];				//Создаем новый массив на один элемент меньше
-		ptr[num] = ptr[size - 1];				//Копируем последний элемент на место элемента, который хотим удалить
-		for (int i = 0; i < size - 1; ++i) {	//Копируем элементы массива в новый массив, кроме последнего
+		T *tmp = new T[size - 1];				
+		ptr[num] = ptr[size - 1];				
+		for (int i = 0; i < size - 1; ++i) {	
 			tmp[i] = ptr[i];
 		}
-		delete[] ptr;							//Удаляем старый массив
-		ptr = tmp;								//ptr указывает на новый массив
-		--size;									//Размер контейнера уменьшился
+		delete[] ptr;							
+		ptr = tmp;								
+		--size;									
 		cout << endl << endl << "El is add successfull" << endl << endl;
 	}
 	catch (exception &err) {
-		cout << err.what() << endl << endl;		//Вывод ошибки на экран
+		cout << err.what() << endl << endl;		
 	}
 }
 
 template<class T>
 void Keeper<T>::display() {
 
-	if (size == 0) {							//Если контейнер пуст
+	if (size == 0) {							
 		cout << "EMPTY" << endl << endl;
 	}
 	else {
-		for (int i = 0; i < size; ++i) {		//Выводи все элементы контейнера на экран
+		for (int i = 0; i < size; ++i) {		
 			cout << ptr[i] << endl;
 		}
 	}
@@ -93,18 +93,18 @@ void Keeper<T>::display() {
 template<class T>
 void Keeper<T>::edit(int id) {
 	try {
-		if (size == 0) {						//Если контейнер пуст
+		if (size == 0) {						
 			exception ex("EMPTY");
 			throw ex;
 		}
-		if (id < 0 || id >= size) {				//Некорректный индекс
+		if (id < 0 || id >= size) {				
 			exception ex("Wrong number");
 			throw ex;
 		}
-		cin >> ptr[id];							//Вводим новые данные выбранного элемента
+		cin >> ptr[id];							
 	}
 	catch (exception &ex) {
-		cout << ex.what() << endl << endl;		//Вывод ошибки на экран
+		cout << ex.what() << endl << endl;		
 	}
 }
 
@@ -118,8 +118,8 @@ void Keeper<T>::edit(int id) {
 				throw ex;
 			}
 
-			fout << size << endl;						//Запись размера контейнера
-			for (int i = 0; i < size; ++i) {			//Запись всех элементов контейнера
+			fout << size << endl;						
+			for (int i = 0; i < size; ++i) {			
 				fout << ptr[i] << endl;
 			}
 			fout.close();
@@ -135,14 +135,14 @@ void Keeper<T>::edit(int id) {
 
 	template<class T>
 	void Keeper<T>::readf(string s) {
-		delete[] ptr;								//Очищаем массив, так как будут записаны данные из файла
+		delete[] ptr;							
 
 		ifstream fin(s, ios::in);
 
-		fin >> size;								//Считываем размер контейнера в файле
-		ptr = new T[size];							//Создаем массив размером контейнера в файле
+		fin >> size;								
+		ptr = new T[size];							
 
-		for (int i = 0; i < size; ++i) {			//Считываем все элементы из файла
+		for (int i = 0; i < size; ++i) {			
 			fin >> ptr[i];
 		}
 
